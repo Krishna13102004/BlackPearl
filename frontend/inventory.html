@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management – Black Pearl Shipyard</title>
+    <meta name="description"
+        content="Live warehouse inventory monitoring, stock analytics, and downloadable reports for Black Pearl Shipyard.">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .inv-filter-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            align-items: center;
+        }
+
+        .inv-filter-bar select,
+        .inv-filter-bar input {
+            flex: 1;
+            min-width: 160px;
+        }
+
+        .stock-table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .stock-table th {
+            background: rgba(255, 215, 0, 0.08);
+            color: #FFD700;
+            font-family: 'Cinzel', serif;
+            font-size: 0.78rem;
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.12);
+            white-space: nowrap;
+        }
+
+        .stock-table td {
+            padding: 13px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c8d8e8;
+            font-size: 0.88rem;
+            vertical-align: middle;
+        }
+
+        .stock-table tr:hover td {
+            background: rgba(255, 215, 0, 0.03);
+        }
+
+        .stock-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .qty-bar-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+            min-width: 60px;
+        }
+
+        .qty-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        @media(max-width:768px) {
+            .chart-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .chart-card h3 {
+            font-family: 'Cinzel', serif;
+            color: #FFD700;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .report-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 32px;
+        }
+
+        .support-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .support-card:hover {
+            border-color: rgba(255, 215, 0, 0.35);
+        }
+
+        .support-icon {
+            font-size: 2.2rem;
+            margin-bottom: 14px;
+        }
+
+        .support-card h4 {
+            color: #FFD700;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .support-card p {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            margin-bottom: 16px;
+        }
+
+        .callback-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #0d1b2a;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: #8fa8c0;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #FFD700;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .summary-card .s-val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            color: #FFD700;
+        }
+
+        .summary-card .s-lbl {
+            color: #8fa8c0;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header" id="siteHeader">
+        <a href="index.html" class="logo-wrap">
+            <img src="../asset/logo.jpg" alt="Logo">
+            <div><span class="brand-name">Black Pearl</span><span class="brand-sub">Shipyard Management</span></div>
+        </a>
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html">🏠 Home</a>
+            <a href="about.html">ℹ️ About</a>
+            <a href="teams.html">👥 Teams</a>
+            <a href="services.html">⚙️ Services</a>
+            <a href="tender.html">📑 Tender</a>
+            <a href="stock-export.html">📦 Stock Export</a>
+            <a href="inventory.html" class="active">📊 Inventory</a>
+            <a href="vigilance.html">🛡️ Vigilance</a>
+            <a href="contact.html">📞 Contact</a>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-login">Login</a>
+                <a href="register.html" class="btn-register">Register</a>
+            </div>
+        </nav>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Inventory</span></div>
+            <h1>Inventory <span>Management</span></h1>
+            <p>Live warehouse monitoring, stock analytics, and downloadable reports for all shipyard materials.</p>
+        </div>
+    </section>
+
+    <!-- SUMMARY CARDS -->
+    <section class="section">
+        <div class="container">
+            <div class="summary-cards reveal">
+                <div class="summary-card">
+                    <div class="s-val">12</div>
+                    <div class="s-lbl">Total Stock Items</div>
+                </div>
+                <div class="summary-card">
+                    <div class="s-val" style="color:#00c896;">9</div>
+                    <div class="s-lbl">In Stock</div>
+                </div>
+                <div class="summary-card">
+                    <div class="s-val" style="color:#ffa500;">2</div>
+                    <div class="s-lbl">Low Stock Alerts</div>
+                </div>
+                <div class="summary-card">
+                    <div class="s-val" style="color:#ff4d6d;">1</div>
+                    <div class="s-lbl">Out of Stock</div>
+                </div>
+                <div class="summary-card">
+                    <div class="s-val">3</div>
+                    <div class="s-lbl">Warehouses</div>
+                </div>
+            </div>
+
+            <!-- FILTER BAR -->
+            <div class="section-header reveal">
+                <span class="section-tag">Live Monitoring</span>
+                <h2 class="section-title">Available <span>Stock</span></h2>
+                <div class="section-line"></div>
+                <p class="section-desc">Real-time warehouse inventory. Filter by location, type, or availability.</p>
+            </div>
+
+            <div class="inv-filter-bar reveal">
+                <select class="form-control" id="filterWarehouse" onchange="filterInventory()">
+                    <option value="">All Warehouses</option>
+                    <option>Warehouse A – Main Dock</option>
+                    <option>Warehouse B – Fabrication</option>
+                    <option>Warehouse C – Electrical</option>
+                </select>
+                <select class="form-control" id="filterType" onchange="filterInventory()">
+                    <option value="">All Types</option>
+                    <option>Marine Engines</option>
+                    <option>Steel &amp; Metal</option>
+                    <option>Electrical</option>
+                    <option>Navigation</option>
+                    <option>Safety Equipment</option>
+                    <option>Hydraulics</option>
+                </select>
+                <select class="form-control" id="filterAvail" onchange="filterInventory()">
+                    <option value="">All Availability</option>
+                    <option>In Stock</option>
+                    <option>Low Stock</option>
+                    <option>Out of Stock</option>
+                </select>
+                <input type="text" class="form-control" id="searchInv" placeholder="🔍 Search stock name or ID..."
+                    oninput="filterInventory()">
+            </div>
+
+            <div class="stock-table-wrap reveal">
+                <table class="stock-table">
+                    <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Stock Name</th>
+                            <th>Category</th>
+                            <th>Warehouse</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Condition</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody"></tbody>
+                </table>
+            </div>
+            <div id="noResults" style="display:none;text-align:center;padding:40px;color:#8fa8c0;">No items match your
+                filters.</div>
+        </div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Analytics</span>
+                <h2 class="section-title">Stock <span>History &amp; Reports</span></h2>
+                <div class="section-line"></div>
+                <p class="section-desc">Analyze stock inflow/outflow trends and generate downloadable reports.</p>
+            </div>
+
+            <div class="chart-section reveal">
+                <div class="chart-card">
+                    <h3>📈 Stock Movement Trends (Last 6 Months)</h3>
+                    <canvas id="stockMovementChart" height="200"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>📊 Stock by Category</h3>
+                    <canvas id="stockCategoryChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card reveal">
+                <h3>📋 Export History</h3>
+                <div style="overflow-x:auto;">
+                    <table class="stock-table">
+                        <thead>
+                            <tr>
+                                <th>Export ID</th>
+                                <th>Item</th>
+                                <th>Qty Exported</th>
+                                <th>Destination</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color:#FFD700;">EXP-20250120-001</td>
+                                <td>Marine Engine MAN B&amp;W 6S50ME</td>
+                                <td>1 Unit</td>
+                                <td>Port of Singapore</td>
+                                <td>2025-01-20</td>
+                                <td><span class="badge badge-open">Dispatched</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color:#FFD700;">EXP-20250201-002</td>
+                                <td>Steel Plate 10mm</td>
+                                <td>50 Ton</td>
+                                <td>Mumbai Port</td>
+                                <td>2025-02-01</td>
+                                <td><span class="badge badge-pending">Processing</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color:#FFD700;">EXP-20250210-003</td>
+                                <td>GPS Navigation System Furuno</td>
+                                <td>3 Units</td>
+                                <td>Chennai Port</td>
+                                <td>2025-02-10</td>
+                                <td><span class="badge badge-pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color:#FFD700;">EXP-20250215-004</td>
+                                <td>Life Raft 25-Person</td>
+                                <td>5 Units</td>
+                                <td>Colombo Port</td>
+                                <td>2025-02-15</td>
+                                <td><span class="badge badge-open">Dispatched</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="report-btns">
+                    <button class="btn-primary-gold" onclick="downloadCSV()">📥 Download CSV Report</button>
+                    <button class="btn-outline-gold" onclick="window.print()">🖨️ Print Report</button>
+                    <button class="btn-glass"
+                        onclick="showToast('Report emailed to admin@blackpearlshipyard.com','success')">✉️ Email
+                        Report</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUPPORT SECTION -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Get Help</span>
+                <h2 class="section-title">Communication <span>&amp; Support</span></h2>
+                <div class="section-line"></div>
+                <p class="section-desc">Need assistance with inventory or export? Reach out through any of these
+                    channels.</p>
+            </div>
+            <div class="support-grid reveal">
+                <div class="support-card">
+                    <div class="support-icon">✉️</div>
+                    <h4>Email Support</h4>
+                    <p>Get real-time assistance from our inventory team for all stock-related queries.</p>
+                    <a href="mailto:inventory@blackpearlshipyard.com" class="btn-glass" style="font-size:0.82rem;">Send
+                        Email →</a>
+                </div>
+                <div class="support-card">
+                    <div class="support-icon">💬</div>
+                    <h4>Forum &amp; Discussion</h4>
+                    <p>Connect with other exporters and shipyard clients on our community forum.</p>
+                    <a href="contact.html" class="btn-glass" style="font-size:0.82rem;">Visit Forum →</a>
+                </div>
+                <div class="support-card">
+                    <div class="support-icon">📞</div>
+                    <h4>Request a Callback</h4>
+                    <p>Our representatives will call you for personalized inventory support.</p>
+                    <button class="btn-glass" style="font-size:0.82rem;"
+                        onclick="document.getElementById('callbackModal').classList.add('open')">Request Callback
+                        →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo-wrap"><img src="../asset/logo.jpg" alt="Logo">
+                        <div><span class="brand-name">Black Pearl</span><span class="brand-sub">Shipyard
+                                Management</span></div>
+                    </a>
+                    <p>World-class shipbuilding and marine engineering solutions since 1920.</p>
+                    <div class="social-links">
+                        <a href="#"><img src="../asset/facebook.jpg" alt="Facebook"></a>
+                        <a href="#"><img src="../asset/twitter.jpg" alt="Twitter"></a>
+                        <a href="#"><img src="../asset/linkedin.jpg" alt="LinkedIn"></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">🏠 Home</a></li>
+                        <li><a href="about.html">ℹ️ About Us</a></li>
+                        <li><a href="services.html">⚙️ Services</a></li>
+                        <li><a href="contact.html">📞 Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Inventory</h4>
+                    <ul>
+                        <li><a href="stock-export.html">📦 Stock Export</a></li>
+                        <li><a href="inventory.html">📊 Live Monitoring</a></li>
+                        <li><a href="tender.html">📑 Tenders</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>📍 Thoothukudi, Tamil Nadu</p>
+                    <p style="margin-top:8px;">📞 +91 461 234 5678</p>
+                    <p style="margin-top:6px;">✉️ inventory@blackpearlshipyard.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Black Pearl Shipyard. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CALLBACK MODAL -->
+    <div class="modal-overlay" id="callbackModal">
+        <div class="modal-box">
+            <button class="modal-close"
+                onclick="document.getElementById('callbackModal').classList.remove('open')">✕</button>
+            <h3 style="font-family:'Cinzel',serif;color:#FFD700;margin-bottom:20px;">📞 Request a Callback</h3>
+            <form onsubmit="submitCallback(event)">
+                <div class="form-group"><label class="form-label">Your Name *</label><input type="text"
+                        class="form-control" placeholder="Full name" required></div>
+                <div class="form-group"><label class="form-label">Phone Number *</label><input type="tel"
+                        class="form-control" placeholder="+91 XXXXX XXXXX" required></div>
+                <div class="form-group"><label class="form-label">Preferred Time</label>
+                    <select class="form-control">
+                        <option>Morning (9 AM – 12 PM)</option>
+                        <option>Afternoon (12 PM – 3 PM)</option>
+                        <option>Evening (3 PM – 6 PM)</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label">Query</label><textarea class="form-control" rows="3"
+                        placeholder="Briefly describe your inventory query..."></textarea></div>
+                <button type="submit" class="btn-primary-gold w-100" style="justify-content:center;">Submit
+                    Request</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+        window.addEventListener('scroll', () => document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 50));
+        const obs = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('visible')), { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        const inventory = [
+            { id: 'INV-001', name: 'Marine Engine MAN B&W 6S50ME', cat: 'Marine Engines', warehouse: 'Warehouse A – Main Dock', qty: 3, maxQty: 10, unit: 'Unit', price: '₹2.4 Cr', condition: 'New', status: 'In Stock' },
+            { id: 'INV-002', name: 'Marine Grade Steel Plate (10mm)', cat: 'Steel & Metal', warehouse: 'Warehouse B – Fabrication', qty: 500, maxQty: 1000, unit: 'Ton', price: '₹85,000/Ton', condition: 'New', status: 'In Stock' },
+            { id: 'INV-003', name: 'Marine Alternator 500kVA', cat: 'Electrical', warehouse: 'Warehouse C – Electrical', qty: 8, maxQty: 20, unit: 'Unit', price: '₹18 Lakh', condition: 'New', status: 'In Stock' },
+            { id: 'INV-004', name: 'GPS Navigation System Furuno', cat: 'Navigation', warehouse: 'Warehouse C – Electrical', qty: 12, maxQty: 30, unit: 'Unit', price: '₹4.5 Lakh', condition: 'New', status: 'In Stock' },
+            { id: 'INV-005', name: 'Life Raft 25-Person', cat: 'Safety Equipment', warehouse: 'Warehouse A – Main Dock', qty: 20, maxQty: 50, unit: 'Unit', price: '₹2.8 Lakh', condition: 'New', status: 'In Stock' },
+            { id: 'INV-006', name: 'Hydraulic Pump 250 Bar', cat: 'Hydraulics', warehouse: 'Warehouse B – Fabrication', qty: 4, maxQty: 20, unit: 'Unit', price: '₹6.2 Lakh', condition: 'Used', status: 'Low Stock' },
+            { id: 'INV-007', name: 'Anchor Chain 76mm Grade 3', cat: 'Steel & Metal', warehouse: 'Warehouse B – Fabrication', qty: 200, maxQty: 500, unit: 'Meter', price: '₹12,000/m', condition: 'New', status: 'In Stock' },
+            { id: 'INV-008', name: 'Marine VHF Radio DSC', cat: 'Navigation', warehouse: 'Warehouse C – Electrical', qty: 25, maxQty: 50, unit: 'Unit', price: '₹85,000', condition: 'New', status: 'In Stock' },
+            { id: 'INV-009', name: 'Fire Suppression System CO2', cat: 'Safety Equipment', warehouse: 'Warehouse A – Main Dock', qty: 3, maxQty: 15, unit: 'Set', price: '₹22 Lakh', condition: 'Refurbished', status: 'Low Stock' },
+            { id: 'INV-010', name: 'Propeller Bronze 4-Blade 3.5m', cat: 'Marine Engines', warehouse: 'Warehouse A – Main Dock', qty: 2, maxQty: 8, unit: 'Unit', price: '₹45 Lakh', condition: 'New', status: 'In Stock' },
+            { id: 'INV-011', name: 'Marine Paint Anti-Fouling 20L', cat: 'Steel & Metal', warehouse: 'Warehouse B – Fabrication', qty: 300, maxQty: 600, unit: 'Can', price: '₹8,500/can', condition: 'New', status: 'In Stock' },
+            { id: 'INV-012', name: 'Electrical Cable Marine Grade 50mm²', cat: 'Electrical', warehouse: 'Warehouse C – Electrical', qty: 0, maxQty: 2000, unit: 'Meter', price: '₹850/m', condition: 'New', status: 'Out of Stock' },
+        ];
+
+        let filtered = [...inventory];
+
+        function filterInventory() {
+            const wh = document.getElementById('filterWarehouse').value;
+            const type = document.getElementById('filterType').value;
+            const avail = document.getElementById('filterAvail').value;
+            const q = document.getElementById('searchInv').value.toLowerCase();
+            filtered = inventory.filter(i =>
+                (!wh || i.warehouse === wh) &&
+                (!type || i.cat === type) &&
+                (!avail || i.status === avail) &&
+                (!q || i.name.toLowerCase().includes(q) || i.id.toLowerCase().includes(q))
+            );
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('inventoryTableBody');
+            const noRes = document.getElementById('noResults');
+            if (filtered.length === 0) { tbody.innerHTML = ''; noRes.style.display = 'block'; return; }
+            noRes.style.display = 'none';
+            const statusColors = { 'In Stock': '#00c896', 'Low Stock': '#ffa500', 'Out of Stock': '#ff4d6d' };
+            const badgeClass = { 'In Stock': 'badge-open', 'Low Stock': 'badge-pending', 'Out of Stock': 'badge-rejected' };
+            tbody.innerHTML = filtered.map(i => {
+                const pct = Math.round((i.qty / i.maxQty) * 100);
+                const barColor = i.status === 'In Stock' ? '#00c896' : i.status === 'Low Stock' ? '#ffa500' : '#ff4d6d';
+                return `<tr>
+        <td style="color:#FFD700;font-weight:600;">${i.id}</td>
+        <td style="font-weight:500;color:#e0e8f0;">${i.name}</td>
+        <td><span style="background:rgba(0,172,237,0.1);color:#00aced;padding:3px 10px;border-radius:50px;font-size:0.75rem;">${i.cat}</span></td>
+        <td style="font-size:0.82rem;color:#8fa8c0;">${i.warehouse}</td>
+        <td>
+          <div class="qty-bar-wrap">
+            <span style="font-weight:600;color:${barColor};min-width:40px;">${i.qty} ${i.unit}</span>
+            <div class="qty-bar"><div class="qty-bar-fill" style="width:${pct}%;background:${barColor};"></div></div>
+          </div>
+        </td>
+        <td style="color:#FFD700;">${i.price}</td>
+        <td><span style="font-size:0.78rem;color:#8fa8c0;">${i.condition}</span></td>
+        <td><span class="badge ${badgeClass[i.status]}">${i.status}</span></td>
+        <td><a href="stock-export.html" class="btn-glass" style="font-size:0.78rem;padding:6px 12px;">Request →</a></td>
+      </tr>`;
+            }).join('');
+        }
+
+        // Charts
+        const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'];
+        new Chart(document.getElementById('stockMovementChart'), {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+                    { label: 'Stock In', data: [45, 62, 38, 71, 55, 48], borderColor: '#00c896', backgroundColor: 'rgba(0,200,150,0.1)', tension: 0.4, fill: true },
+                    { label: 'Stock Out (Exports)', data: [28, 35, 42, 29, 38, 31], borderColor: '#FFD700', backgroundColor: 'rgba(255,215,0,0.08)', tension: 0.4, fill: true }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { labels: { color: '#8fa8c0' } } }, scales: { x: { ticks: { color: '#8fa8c0' }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { ticks: { color: '#8fa8c0' }, grid: { color: 'rgba(255,255,255,0.05)' } } } }
+        });
+
+        new Chart(document.getElementById('stockCategoryChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Marine Engines', 'Steel & Metal', 'Electrical', 'Navigation', 'Safety', 'Hydraulics'],
+                datasets: [{ data: [2, 3, 2, 2, 2, 1], backgroundColor: ['#FFD700', '#00aced', '#00c896', '#a78bfa', '#ffa500', '#ff4d6d'], borderWidth: 0 }]
+            },
+            options: { responsive: true, plugins: { legend: { labels: { color: '#8fa8c0', padding: 16 } } } }
+        });
+
+        function downloadCSV() {
+            const headers = ['Item ID', 'Name', 'Category', 'Warehouse', 'Quantity', 'Unit', 'Price', 'Condition', 'Status'];
+            const rows = inventory.map(i => [i.id, `"${i.name}"`, i.cat, `"${i.warehouse}"`, i.qty, i.unit, `"${i.price}"`, i.condition, i.status]);
+            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+            a.download = 'BlackPearl_Inventory_Report.csv'; a.click();
+            showToast('Inventory report downloaded!', 'success');
+        }
+
+        function submitCallback(e) {
+            e.preventDefault();
+            document.getElementById('callbackModal').classList.remove('open');
+            showToast('Callback request submitted! We will contact you shortly.', 'success');
+            e.target.reset();
+        }
+
+        function showToast(msg, type = 'info') {
+            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerHTML = `<span class="toast-icon">${icons[type]}</span><span class="toast-msg">${msg}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 4000);
+        }
+
+        renderTable();
+    </script>
+</body>
+
+</html>

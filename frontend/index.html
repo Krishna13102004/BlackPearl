@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Pearl – Shipyard Management System</title>
+  <meta name="description"
+    content="Black Pearl Shipyard – World-class shipbuilding, repair, and marine engineering solutions since 1920.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="siteHeader">
+    <a href="index.html" class="logo-wrap">
+      <img src="../asset/logo.jpg" alt="Black Pearl Logo">
+      <div>
+        <span class="brand-name">Black Pearl</span>
+        <span class="brand-sub">Shipyard Management</span>
+      </div>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" class="active">🏠 Home</a>
+      <a href="about.html">ℹ️ About</a>
+      <a href="teams.html">👥 Teams</a>
+      <a href="services.html">⚙️ Services</a>
+      <a href="tender.html">📑 Tender</a>
+      <a href="stock-export.html">📦 Stock Export</a>
+      <a href="vigilance.html">🛡️ Vigilance</a>
+      <a href="contact.html">📞 Contact</a>
+      <div class="nav-auth">
+        <a href="login.html" class="btn-login">Login</a>
+        <a href="register.html" class="btn-register">Register</a>
+      </div>
+    </nav>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="../asset/bg.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Est. 1920 · Thoothukudi, Tamil Nadu</div>
+      <h1 class="hero-title">
+        Welcome to <span>Black Pearl</span><br>Shipyard
+      </h1>
+      <p class="hero-subtitle">
+        World-class shipbuilding, repair, and marine engineering solutions.<br>
+        Precision crafted. Globally trusted.
+      </p>
+      <div class="hero-actions">
+        <a href="services.html" class="btn-primary-gold">⚓ Explore Services</a>
+        <a href="tender.html" class="btn-outline-gold">📑 View Tenders</a>
+        <a href="register.html" class="btn-glass">🚀 Get Started</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ══ STATS BAR ══ -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" data-target="100">0</div>
+          <div class="stat-label">Years of Excellence</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="500">0</div>
+          <div class="stat-label">Ships Built</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="5000">0</div>
+          <div class="stat-label">Skilled Workforce</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="48">0</div>
+          <div class="stat-label">Nations Served</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FACILITIES ══ -->
+  <section class="section" id="facilities">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Infrastructure</span>
+        <h2 class="section-title">Our <span>Facilities</span></h2>
+        <div class="section-line"></div>
+        <p class="section-desc">State-of-the-art infrastructure designed for world-class shipbuilding and marine
+          engineering.</p>
+      </div>
+
+      <div class="facilities-grid">
+        <div class="facility-card reveal">
+          <img src="../asset/dockyard.jpg" alt="Dockyard">
+          <div class="facility-card-body">
+            <h3>⚓ Dockyard</h3>
+            <p>Secure berthing for ships and vessels with 24/7 operational support and monitoring.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/fabric.jpg" alt="Fabrication Unit">
+          <div class="facility-card-body">
+            <h3>🔧 Fabrication Unit</h3>
+            <p>Custom metalwork and structural fabrication with precision engineering capabilities.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/storage.jpg" alt="Storage Container">
+          <div class="facility-card-body">
+            <h3>📦 Storage Container</h3>
+            <p>Secure storage containers for equipment and material safekeeping with climate control.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/cranes.jpg" alt="Cranes">
+          <div class="facility-card-body">
+            <h3>🏗️ Cranes & Lifting</h3>
+            <p>Heavy-duty cranes and lifting equipment for safe handling of oversized marine components.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/machine.jpg" alt="Machine Shops">
+          <div class="facility-card-body">
+            <h3>⚙️ Machine Shops</h3>
+            <p>Advanced CNC and precision machining tools for manufacturing critical ship components.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/dry.jpg" alt="Dry Docks">
+          <div class="facility-card-body">
+            <h3>🚢 Dry Docks</h3>
+            <p>4 operational dry docks for maintenance, inspection, and repair of large naval vessels.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/electrical.jpg" alt="Electrical Workshop">
+          <div class="facility-card-body">
+            <h3>⚡ Electrical Workshop</h3>
+            <p>Comprehensive electrical and electronics services for all marine systems and navigation.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/paint.jpg" alt="Paint Facilities">
+          <div class="facility-card-body">
+            <h3>🎨 Paint & Coating</h3>
+            <p>Specialized anti-corrosion paint facilities ensuring high-quality marine vessel finishes.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/scrap.jpg" alt="Scrap Areas">
+          <div class="facility-card-body">
+            <h3>♻️ Scrap & Recycle</h3>
+            <p>Eco-friendly recycling areas promoting sustainability through responsible waste management.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/assembly.jpg" alt="Assembly Bays">
+          <div class="facility-card-body">
+            <h3>🏭 Assembly Bays</h3>
+            <p>Large-scale assembly bays streamlining construction for ships and marine structures.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+        <div class="facility-card reveal">
+          <img src="../asset/wet.jpg" alt="Wet Docks">
+          <div class="facility-card-body">
+            <h3>🌊 Wet Docks</h3>
+            <p>Wet docks providing easy access and maintenance for vessels in operational condition.</p>
+            <a href="services.html">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SHIPYARD OVERVIEW ══ -->
+  <section class="section section-alt" id="overview">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">At a Glance</span>
+        <h2 class="section-title">Shipyard <span>Overview</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="overview-wrap">
+        <div class="overview-img reveal">
+          <img src="../asset/ship1.jpg" alt="Shipyard View">
+        </div>
+        <div class="overview-center reveal">
+          <h2>Current Operations</h2>
+          <p><strong>Location:</strong> Coastal Industrial Zone, Thoothukudi, Tamil Nadu</p>
+          <p><strong>Total Area:</strong> 500 acres of operational shipyard</p>
+          <p><strong>Dry Docks:</strong> 4 operational dry docks (up to 50,000 DWT)</p>
+          <p><strong>Ships Currently in Yard:</strong></p>
+          <div class="ship-list">
+            <div class="ship-item">⚓ INS Defender – Undergoing Maintenance</div>
+            <div class="ship-item">🚢 MV Ocean Star – New Build Project</div>
+            <div class="ship-item">🔍 SS Marine Explorer – Scheduled for Inspection</div>
+            <div class="ship-item">🏗️ Coastal Patrol Vessel CPV-14 – Final Assembly</div>
+            <div class="ship-item">⚙️ HMS Titan – Hull Reinforcement</div>
+            <div class="ship-item">⚡ USS Voyager – Electrical Systems Upgrade</div>
+            <div class="ship-item">🔧 NS Atlantis – Propeller Repair</div>
+            <div class="ship-item">🎨 Seafarer's Pride – Interior Retrofitting</div>
+          </div>
+        </div>
+        <div class="overview-img reveal">
+          <img src="../asset/ship2.jpg" alt="Shipyard at Work">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HISTORY & OWNERSHIP ══ -->
+  <section class="section" id="history">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Our Legacy</span>
+        <h2 class="section-title">History & <span>Ownership</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="history-wrap">
+        <div class="history-img reveal">
+          <img src="../asset/TonyStark.jpg" alt="Founder">
+          <div class="img-caption">Tony Stark – Founder & Chairman</div>
+        </div>
+        <div class="history-content reveal">
+          <h2>A Century of <span>Maritime Excellence</span></h2>
+          <p>
+            Black Pearl Shipyard, established over a century ago in Thoothukudi, Tamil Nadu, has been a cornerstone of
+            India's maritime industry. From humble beginnings as a regional dock, it has grown into a world-class
+            facility specializing in shipbuilding, repair, and marine engineering.
+          </p>
+          <p>
+            Over the decades, we have constructed and maintained naval, commercial, and industrial vessels, earning a
+            reputation for precision and innovation. Our expertise spans from high-capacity cargo ships and defense
+            vessels to custom-built luxury yachts.
+          </p>
+          <p>
+            With a commitment to technological advancement and sustainable practices, our shipyard integrates
+            cutting-edge engineering solutions to enhance vessel performance and efficiency, ensuring every project
+            meets the highest global maritime standards.
+          </p>
+          <p>
+            Today, Black Pearl Shipyard stands as a symbol of heritage and progress, blending tradition with modernity
+            to build vessels that define the future of maritime exploration.
+          </p>
+          <div style="margin-top:28px;">
+            <a href="about.html" class="btn-primary-gold">Read Full Story →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ BANNER GALLERY ══ -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Gallery</span>
+        <h2 class="section-title">Shipyard <span>Gallery</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+        <div class="reveal" style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,215,0,0.15);">
+          <img src="../asset/banner1.jpg" alt="Shipyard"
+            style="width:100%;height:200px;object-fit:cover;display:block;transition:transform 0.4s ease;"
+            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="reveal" style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,215,0,0.15);">
+          <img src="../asset/banner2.jpg" alt="Shipyard"
+            style="width:100%;height:200px;object-fit:cover;display:block;transition:transform 0.4s ease;"
+            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="reveal" style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,215,0,0.15);">
+          <img src="../asset/banner3.jpg" alt="Shipyard"
+            style="width:100%;height:200px;object-fit:cover;display:block;transition:transform 0.4s ease;"
+            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="reveal" style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,215,0,0.15);">
+          <img src="../asset/banner4.jpg" alt="Shipyard"
+            style="width:100%;height:200px;object-fit:cover;display:block;transition:transform 0.4s ease;"
+            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="reveal" style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,215,0,0.15);">
+          <img src="../asset/banner5.jpg" alt="Shipyard"
+            style="width:100%;height:200px;object-fit:cover;display:block;transition:transform 0.4s ease;"
+            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MAP ══ -->
+  <section class="map-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Location</span>
+        <h2 class="section-title">Find <span>Us</span></h2>
+        <div class="section-line"></div>
+        <p class="section-desc">Coastal Industrial Zone, Thoothukudi, Tamil Nadu, India – 628 001</p>
+      </div>
+      <div id="map" class="reveal"></div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo-wrap">
+            <img src="../asset/logo.jpg" alt="Logo">
+            <div>
+              <span class="brand-name">Black Pearl</span>
+              <span class="brand-sub">Shipyard Management</span>
+            </div>
+          </a>
+          <p>World-class shipbuilding and marine engineering solutions. Precision crafted, globally trusted since 1920.
+          </p>
+          <div class="social-links">
+            <a href="#" title="Facebook"><img src="../asset/facebook.jpg" alt="Facebook"></a>
+            <a href="#" title="Twitter"><img src="../asset/twitter.jpg" alt="Twitter"></a>
+            <a href="#" title="LinkedIn"><img src="../asset/linkedin.jpg" alt="LinkedIn"></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="about.html">ℹ️ About Us</a></li>
+            <li><a href="teams.html">👥 Our Teams</a></li>
+            <li><a href="services.html">⚙️ Services</a></li>
+            <li><a href="contact.html">📞 Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">🚢 Ship Building</a></li>
+            <li><a href="services.html">🔧 Ship Repair</a></li>
+            <li><a href="tender.html">📑 Tenders</a></li>
+            <li><a href="stock-export.html">📦 Stock Export</a></li>
+            <li><a href="vigilance.html">🛡️ Vigilance</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <p>📍 Coastal Industrial Zone,<br>Thoothukudi, Tamil Nadu 628 001</p>
+          <p style="margin-top:10px;">📞 +91 461 234 5678</p>
+          <p style="margin-top:6px;">✉️ info@blackpearlshipyard.com</p>
+          <p style="margin-top:6px;">🕐 Mon–Sat: 8:00 AM – 6:00 PM</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Black Pearl Shipyard Management System. All Rights Reserved.</p>
+        <p>Designed with ⚓ for Maritime Excellence</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+    hamburger.addEventListener('click', () => mainNav.classList.toggle('open'));
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Counter animation
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target);
+      const duration = 2000;
+      const step = target / (duration / 16);
+      let current = 0;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { el.textContent = target + '+'; clearInterval(timer); }
+        else el.textContent = Math.floor(current) + '+';
+      }, 16);
+    }
+
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); statObserver.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-number').forEach(el => statObserver.observe(el));
+
+    // Leaflet Map
+    const map = L.map('map').setView([8.7642, 78.1348], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    const icon = L.divIcon({
+      html: '<div style="background:#FFD700;width:20px;height:20px;border-radius:50%;border:3px solid #001F3F;box-shadow:0 0 10px rgba(255,215,0,0.8);"></div>',
+      iconSize: [20, 20], iconAnchor: [10, 10]
+    });
+    L.marker([8.7642, 78.1348], { icon }).addTo(map)
+      .bindPopup('<b>⚓ Black Pearl Shipyard</b><br>Thoothukudi, Tamil Nadu').openPopup();
+
+    // Background Polling for Public Data
+    async function pollPublicData() {
+      try {
+        if (typeof API === 'undefined') return;
+        const [tenders, inventory] = await Promise.all([
+          API.public.getOpenTenders(),
+          API.public.getAvailableInventory()
+        ]);
+        console.log('[Poll] Fetched public data:', { tenders: tenders?.length, inventory: inventory?.length });
+      } catch (e) {
+        console.warn('[Poll] Failed to fetch public data:', e.message);
+      }
+    }
+
+    // Initial poll and set interval (30s)
+    pollPublicData();
+    setInterval(pollPublicData, 30000);
+  </script>
+</body>
+
+</html>

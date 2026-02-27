@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Export – Black Pearl Shipyard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="site-header" id="siteHeader">
+        <a href="index.html" class="logo-wrap"><img src="../asset/logo.jpg" alt="Logo">
+            <div><span class="brand-name">Black Pearl</span><span class="brand-sub">Shipyard Management</span></div>
+        </a>
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html">🏠 Home</a><a href="about.html">ℹ️ About</a><a href="teams.html">👥 Teams</a><a
+                href="services.html">⚙️ Services</a><a href="tender.html">📑 Tender</a><a href="stock-export.html"
+                class="active">📦 Stock Export</a><a href="inventory.html">📊 Inventory</a><a href="vigilance.html">🛡️
+                Vigilance</a><a href="contact.html">📞
+                Contact</a>
+            <div class="nav-auth"><a href="login.html" class="btn-login">Login</a><a href="register.html"
+                    class="btn-register">Register</a></div>
+        </nav>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Stock Export</span></div>
+            <h1>Stock <span>Export</span></h1>
+            <p>Request export of marine equipment, parts, and materials from our inventory.</p>
+        </div>
+    </section>
+
+    <!-- Inventory Overview -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Available Stock</span>
+                <h2 class="section-title">Inventory <span>Catalog</span></h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;" class="reveal">
+                <select class="form-control" style="width:auto;" id="filterCat" onchange="filterStock()">
+                    <option value="">All Categories</option>
+                    <option>Marine Engines</option>
+                    <option>Steel & Metal</option>
+                    <option>Electrical</option>
+                    <option>Navigation</option>
+                    <option>Safety Equipment</option>
+                    <option>Hydraulics</option>
+                </select>
+                <input type="text" class="form-control" style="width:auto;flex:1;" placeholder="🔍 Search inventory..."
+                    id="searchStock" oninput="filterStock()">
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"
+                id="stockGrid"></div>
+        </div>
+    </section>
+
+    <!-- Export Request Form -->
+    <section class="section section-alt">
+        <div class="container">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
+                <div class="reveal">
+                    <span class="section-tag">Export Process</span>
+                    <h2 class="section-title" style="text-align:left;">How to <span>Request Export</span></h2>
+                    <p style="color:var(--text-muted);margin-bottom:24px;">Submit a stock export request through our
+                        portal. All requests are reviewed and approved by the admin team.</p>
+                    <div style="display:flex;flex-direction:column;gap:16px;">
+                        <div style="display:flex;gap:16px;align-items:flex-start;">
+                            <div
+                                style="width:40px;height:40px;background:rgba(255,215,0,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#FFD700;flex-shrink:0;">
+                                1</div>
+                            <div>
+                                <h4 style="color:#fff;margin-bottom:4px;">Browse Catalog</h4>
+                                <p style="color:var(--text-muted);font-size:0.85rem;">Search our inventory catalog for
+                                    required items.</p>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:16px;align-items:flex-start;">
+                            <div
+                                style="width:40px;height:40px;background:rgba(255,215,0,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#FFD700;flex-shrink:0;">
+                                2</div>
+                            <div>
+                                <h4 style="color:#fff;margin-bottom:4px;">Submit Request</h4>
+                                <p style="color:var(--text-muted);font-size:0.85rem;">Fill the export request form with
+                                    item details and quantity.</p>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:16px;align-items:flex-start;">
+                            <div
+                                style="width:40px;height:40px;background:rgba(255,215,0,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#FFD700;flex-shrink:0;">
+                                3</div>
+                            <div>
+                                <h4 style="color:#fff;margin-bottom:4px;">Admin Approval</h4>
+                                <p style="color:var(--text-muted);font-size:0.85rem;">Request reviewed and approved by
+                                    inventory manager.</p>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:16px;align-items:flex-start;">
+                            <div
+                                style="width:40px;height:40px;background:rgba(255,215,0,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#FFD700;flex-shrink:0;">
+                                4</div>
+                            <div>
+                                <h4 style="color:#fff;margin-bottom:4px;">Dispatch</h4>
+                                <p style="color:var(--text-muted);font-size:0.85rem;">Items dispatched with tracking
+                                    number and documentation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:28px;"><a href="login.html" class="btn-primary-gold">Login to Request →</a>
+                    </div>
+                </div>
+                <div class="form-card reveal">
+                    <h3 style="font-family:'Cinzel',serif;color:#FFD700;margin-bottom:20px;">📦 Export Request Form</h3>
+                    <form onsubmit="submitExport(event)">
+                        <div class="form-group"><label class="form-label">Company / Organization</label><input
+                                type="text" class="form-control" placeholder="Your organization" required></div>
+                        <div class="form-group"><label class="form-label">Contact Email</label><input type="email"
+                                class="form-control" placeholder="contact@company.com" required></div>
+                        <div class="form-group"><label class="form-label">Item Name / Part Number</label><input
+                                type="text" class="form-control" placeholder="e.g. Marine Engine MAN B&W 6S50ME"
+                                required></div>
+                        <div class="form-group"><label class="form-label">Quantity Required</label><input type="number"
+                                class="form-control" placeholder="Enter quantity" min="1" required></div>
+                        <div class="form-group"><label class="form-label">Purpose of Export</label><select
+                                class="form-control">
+                                <option>Ship Repair</option>
+                                <option>New Construction</option>
+                                <option>Maintenance</option>
+                                <option>Resale</option>
+                                <option>Other</option>
+                            </select></div>
+                        <div class="form-group"><label class="form-label">Delivery Address</label><textarea
+                                class="form-control" rows="2" placeholder="Full delivery address..."></textarea></div>
+                        <button type="submit" class="btn-primary-gold w-100" style="justify-content:center;">Submit
+                            Export Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand"><a href="index.html" class="logo-wrap"><img src="../asset/logo.jpg"
+                            alt="Logo">
+                        <div><span class="brand-name">Black Pearl</span><span class="brand-sub">Shipyard
+                                Management</span></div>
+                    </a>
+                    <p>World-class shipbuilding and marine engineering solutions since 1920.</p>
+                    <div class="social-links"><a href="#"><img src="../asset/facebook.jpg" alt="Facebook"></a><a
+                            href="#"><img src="../asset/twitter.jpg" alt="Twitter"></a><a href="#"><img
+                                src="../asset/linkedin.jpg" alt="LinkedIn"></a></div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Ship Building</a></li>
+                        <li><a href="services.html">Ship Repair</a></li>
+                        <li><a href="tender.html">Tenders</a></li>
+                        <li><a href="stock-export.html">Stock Export</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>📍 Thoothukudi, Tamil Nadu</p>
+                    <p style="margin-top:8px;">📞 +91 461 234 5678</p>
+                    <p style="margin-top:6px;">✉️ inventory@blackpearlshipyard.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Black Pearl Shipyard. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Tracking ID Modal -->
+    <div class="modal-overlay" id="trackingModal"
+        style="position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);">
+        <div
+            style="background:#0d1b2a;border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:40px;max-width:460px;width:90%;text-align:center;position:relative;">
+            <div style="font-size:3rem;margin-bottom:16px;">✅</div>
+            <h2 style="font-family:'Cinzel',serif;color:#FFD700;margin-bottom:10px;">Export Request Submitted!</h2>
+            <p style="color:#8fa8c0;margin-bottom:24px;">Your request has been received. Use the tracking ID below to
+                monitor your export status.</p>
+            <div
+                style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:20px;margin-bottom:24px;">
+                <div style="font-size:0.78rem;color:#8fa8c0;margin-bottom:6px;">TRACKING ID</div>
+                <div id="trackingIdDisplay"
+                    style="font-family:'Cinzel',serif;font-size:1.4rem;color:#FFD700;letter-spacing:2px;font-weight:700;">
+                    EXP-00000000-000000</div>
+            </div>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                <button class="btn-primary-gold" onclick="copyTrackingId()">📋 Copy Tracking ID</button>
+                <button class="btn-glass"
+                    onclick="document.getElementById('trackingModal').classList.remove('open')">Close</button>
+            </div>
+            <p style="color:#8fa8c0;font-size:0.78rem;margin-top:20px;">Save this ID to check your export status in your
+                dashboard.</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+        window.addEventListener('scroll', () => document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 50));
+        const obs = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('visible')), { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        // Make modal overlay clickable to close
+        document.getElementById('trackingModal').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
+        document.getElementById('trackingModal').style.display = 'flex'; document.getElementById('trackingModal').style.display = 'none';
+        document.getElementById('trackingModal').style.cssText += ';display:none;';
+        document.getElementById('trackingModal').classList.add = (function (orig) { return function (cls) { if (cls === 'open') this.style.display = 'flex'; return orig.call(this, cls); }; })(document.getElementById('trackingModal').classList.add);
+        document.getElementById('trackingModal').classList.remove = (function (orig) { return function (cls) { if (cls === 'open') this.style.display = 'none'; return orig.call(this, cls); }; })(document.getElementById('trackingModal').classList.remove);
+        function copyTrackingId() {
+            const id = document.getElementById('trackingIdDisplay').textContent;
+            navigator.clipboard.writeText(id).then(() => showToast('Tracking ID copied to clipboard!', 'success'));
+        }
+
+        const inventory = [
+            { id: 'INV-001', name: 'Marine Engine MAN B&W 6S50ME', cat: 'Marine Engines', qty: 3, unit: 'Unit', price: '₹2.4 Cr', status: 'Available' },
+            { id: 'INV-002', name: 'Marine Grade Steel Plate (10mm)', cat: 'Steel & Metal', qty: 500, unit: 'Ton', price: '₹85,000/Ton', status: 'Available' },
+            { id: 'INV-003', name: 'Marine Alternator 500kVA', cat: 'Electrical', qty: 8, unit: 'Unit', price: '₹18 Lakh', status: 'Available' },
+            { id: 'INV-004', name: 'GPS Navigation System Furuno', cat: 'Navigation', qty: 12, unit: 'Unit', price: '₹4.5 Lakh', status: 'Available' },
+            { id: 'INV-005', name: 'Life Raft 25-Person', cat: 'Safety Equipment', qty: 20, unit: 'Unit', price: '₹2.8 Lakh', status: 'Available' },
+            { id: 'INV-006', name: 'Hydraulic Pump 250 Bar', cat: 'Hydraulics', qty: 6, unit: 'Unit', price: '₹6.2 Lakh', status: 'Low Stock' },
+            { id: 'INV-007', name: 'Anchor Chain 76mm Grade 3', cat: 'Steel & Metal', qty: 200, unit: 'Meter', price: '₹12,000/m', status: 'Available' },
+            { id: 'INV-008', name: 'Marine VHF Radio DSC', cat: 'Navigation', qty: 25, unit: 'Unit', price: '₹85,000', status: 'Available' },
+            { id: 'INV-009', name: 'Fire Suppression System CO2', cat: 'Safety Equipment', qty: 4, unit: 'Set', price: '₹22 Lakh', status: 'Low Stock' },
+            { id: 'INV-010', name: 'Propeller Bronze 4-Blade 3.5m', cat: 'Marine Engines', qty: 2, unit: 'Unit', price: '₹45 Lakh', status: 'Available' },
+            { id: 'INV-011', name: 'Marine Paint Anti-Fouling 20L', cat: 'Steel & Metal', qty: 300, unit: 'Can', price: '₹8,500/can', status: 'Available' },
+            { id: 'INV-012', name: 'Electrical Cable Marine Grade 50mm²', cat: 'Electrical', qty: 1000, unit: 'Meter', price: '₹850/m', status: 'Available' },
+        ];
+
+        let filteredStock = [...inventory];
+
+        function renderStock() {
+            document.getElementById('stockGrid').innerHTML = filteredStock.map(item => `
+      <div class="facility-card">
+        <div style="padding:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+            <span style="font-size:0.72rem;color:#8fa8c0;background:rgba(255,255,255,0.05);padding:3px 10px;border-radius:50px;">${item.id}</span>
+            <span class="badge ${item.status === 'Available' ? 'badge-open' : 'badge-pending'}">${item.status}</span>
+          </div>
+          <h4 style="color:#fff;font-size:0.9rem;margin-bottom:8px;line-height:1.4;">${item.name}</h4>
+          <p style="color:#8fa8c0;font-size:0.8rem;margin-bottom:4px;">📦 Category: ${item.cat}</p>
+          <p style="color:#8fa8c0;font-size:0.8rem;margin-bottom:4px;">📊 Available: ${item.qty} ${item.unit}</p>
+          <p style="color:#FFD700;font-size:0.88rem;font-weight:600;margin-bottom:16px;">💰 ${item.price}</p>
+          <a href="login.html" class="btn-glass" style="font-size:0.8rem;padding:8px 16px;display:inline-flex;">Request Export →</a>
+        </div>
+      </div>`).join('');
+        }
+
+        function filterStock() {
+            const cat = document.getElementById('filterCat').value;
+            const search = document.getElementById('searchStock').value.toLowerCase();
+            filteredStock = inventory.filter(i =>
+                (!cat || i.cat === cat) &&
+                (!search || i.name.toLowerCase().includes(search) || i.id.toLowerCase().includes(search))
+            );
+            renderStock();
+        }
+
+        function submitExport(e) {
+            e.preventDefault();
+            const now = new Date();
+            const datePart = now.getFullYear().toString() +
+                String(now.getMonth() + 1).padStart(2, '0') +
+                String(now.getDate()).padStart(2, '0');
+            const randPart = Math.floor(100000 + Math.random() * 900000);
+            const trackingId = `EXP-${datePart}-${randPart}`;
+            document.getElementById('trackingIdDisplay').textContent = trackingId;
+            document.getElementById('trackingModal').classList.add('open');
+            e.target.reset();
+        }
+
+        function showToast(msg, type = 'info') {
+            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerHTML = `<span class="toast-icon">${icons[type]}</span><span class="toast-msg">${msg}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 4000);
+        }
+
+        renderStock();
+    </script>
+</body>
+
+</html>

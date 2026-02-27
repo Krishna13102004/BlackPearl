@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard – Black Pearl Shipyard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="dash-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <img src="../asset/logo.jpg" alt="Logo">
+                <div class="brand-text">Black Pearl<small>Shipyard</small></div>
+            </div>
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userInitial">U</div>
+                <div class="user-info">
+                    <div class="user-name" id="sidebarUserName">John Doe</div>
+                    <div class="user-role" id="sidebarUserDept">User</div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Main</div>
+                <a class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')"><span
+                        class="nav-icon">📊</span>
+                    Dashboard</a>
+                <div class="nav-section-label">Services</div>
+                <a class="nav-item" data-section="ship-orders" onclick="showSection('ship-orders')"><span
+                        class="nav-icon">🚢</span> Ship
+                    Orders</a>
+                <a class="nav-item" data-section="repairs" onclick="showSection('repairs')"><span
+                        class="nav-icon">🔧</span> Ship Repairs</a>
+                <a class="nav-item" data-section="tenders" onclick="showSection('tenders')"><span
+                        class="nav-icon">📑</span> My Tenders</a>
+                <a class="nav-item" data-section="stock-exports" onclick="showSection('stock-exports')"><span
+                        class="nav-icon">📦</span> Stock
+                    Exports</a>
+                <div class="nav-section-label">Account</div>
+                <a class="nav-item" onclick="showSection('profile')"><span class="nav-icon">👤</span> Profile</a>
+                <a class="nav-item" onclick="showSection('notifications')"><span class="nav-icon">🔔</span>
+                    Notifications <span class="nav-badge">3</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a class="nav-item" onclick="logout()" style="color:#ff4d6d;"><span class="nav-icon">🚪</span>
+                    Logout</a>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <div class="dash-main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle"
+                        onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+                    <div class="page-title" id="pageTitle">Dashboard</div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-icon-btn" onclick="showSection('notifications')">🔔<span
+                            class="notif-dot"></span></div>
+                    <div class="topbar-user">
+                        <div class="user-avatar" id="topbarInitial">U</div>
+                        <span class="user-name" id="topbarName">John Doe</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="dash-content">
+
+                <!-- ── DASHBOARD ── -->
+                <div class="dash-section active" id="sec-dashboard">
+                    <div class="stat-cards">
+                        <div class="stat-card" style="--accent:#FFD700;">
+                            <div class="stat-card-icon gold">🚢</div>
+                            <div class="stat-card-info">
+                                <div class="stat-value" id="statShipOrders">0</div>
+                                <div class="stat-label">Ship Orders</div>
+                                <div class="stat-change up">↑ Live data</div>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="--accent:#00aced;">
+                            <div class="stat-card-icon blue">🔧</div>
+                            <div class="stat-card-info">
+                                <div class="stat-value" id="statRepairs">0</div>
+                                <div class="stat-label">Repair Requests</div>
+                                <div class="stat-change up">↑ Live data</div>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="--accent:#00c896;">
+                            <div class="stat-card-icon green">📑</div>
+                            <div class="stat-card-info">
+                                <div class="stat-value" id="statTenders">0</div>
+                                <div class="stat-label">Tender Applications</div>
+                                <div class="stat-change up">↑ Live data</div>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="--accent:#a78bfa;">
+                            <div class="stat-card-icon purple">📦</div>
+                            <div class="stat-card-info">
+                                <div class="stat-value" id="statExports">0</div>
+                                <div class="stat-label">Stock Exports</div>
+                                <div class="stat-change up">↑ Live data</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Quick Actions -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h3><span class="card-icon">⚡</span> Quick Actions</h3>
+                        </div>
+                        <div class="dash-card-body">
+                            <div class="quick-actions">
+                                <a class="quick-action-btn"
+                                    onclick="showSection('ship-orders');openModal('orderModal')">
+                                    <div class="qa-icon">🚢</div>New Ship Order
+                                </a>
+                                <a class="quick-action-btn" onclick="showSection('repairs');openModal('repairModal')">
+                                    <div class="qa-icon">🔧</div>Request Repair
+                                </a>
+                                <a class="quick-action-btn" href="../tender.html">
+                                    <div class="qa-icon">📑</div>View Tenders
+                                </a>
+                                <a class="quick-action-btn"
+                                    onclick="showSection('stock-exports');openModal('exportModal')">
+                                    <div class="qa-icon">📦</div>Stock Export
+                                </a>
+                                <a class="quick-action-btn" onclick="showSection('profile')">
+                                    <div class="qa-icon">👤</div>My Profile
+                                </a>
+                                <a class="quick-action-btn" href="../vigilance.html">
+                                    <div class="qa-icon">🛡️</div>Vigilance
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="chart-grid">
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h3><span class="card-icon">📊</span> Order Status</h3>
+                            </div>
+                            <div class="dash-card-body">
+                                <div class="chart-container"><canvas id="orderChart"></canvas></div>
+                            </div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h3><span class="card-icon">🔔</span> Recent Notifications</h3>
+                            </div>
+                            <div class="dash-card-body">
+                                <div class="notif-list" id="dashboardNotifications">
+                                    <div class="notif-item">
+                                        <div class="notif-dot-icon blue"></div>
+                                        <div>
+                                            <div class="notif-text">Loading notifications...</div>
+                                            <div class="notif-time">Just now</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── SHIP ORDERS ── -->
+                <div class="dash-section" id="sec-ship-orders">
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h3><span class="card-icon">🚢</span> My Ship Orders</h3>
+                            <button class="btn-primary-gold" style="font-size:0.82rem;padding:8px 16px;"
+                                onclick="openModal('orderModal')">+ New Order</button>
+                        </div>
+                        <div class="dash-card-body" style="padding:0;">
+                            <div style="overflow-x:auto;">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Ship Type</th>
+                                            <th>Specifications</th>
+                                            <th>Submitted</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="shipOrdersBody">
+                                        <tr>
+                                            <td colspan="6" style="text-align:center;color:#8fa8c0;padding:24px;">
+                                                Loading ship orders...</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── REPAIRS ── -->
+                <div class="dash-section" id="sec-repairs">
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h3><span class="card-icon">🔧</span> Repair Requests</h3>
+                            <button class="btn-primary-gold" style="font-size:0.82rem;padding:8px 16px;"
+                                onclick="openModal('repairModal')">+ New Request</button>
+                        </div>
+                        <div class="dash-card-body" style="padding:0;">
+                            <div style="overflow-x:auto;">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Request ID</th>
+                                            <th>Vessel Name</th>
+                                            <th>Issue</th>
+                                            <th>Priority</th>
+                                            <th>Submitted</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="repairsBody">
+                                        <tr>
+                                            <td colspan="6" style="text-align:center;color:#8fa8c0;padding:24px;">
+                                                Loading repair requests...</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── TENDERS ── -->
+                <div class="dash-section" id="sec-tenders">
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h3><span class="card-icon">📑</span> My Tender Applications</h3>
+                            <a href="../tender.html" class="btn-outline-gold"
+                                style="font-size:0.82rem;padding:8px 16px;">Browse Tenders</a>
+                        </div>
+                        <div class="dash-card-body" style="padding:0;">
+                            <div style="overflow-x:auto;">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Application ID</th>
+                                            <th>Tender No.</th>
+                                            <th>Title</th>
+                                            <th>Bid Amount</th>
+                                            <th>Applied On</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tendersBody">
+                                        <tr>
+                                            <td colspan="6" style="text-align:center;color:#8fa8c0;padding:24px;">
+                                                Loading tender applications...</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── STOCK EXPORTS ── -->
+                <div class="dash-section" id="sec-stock-exports">
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h3><span class="card-icon">📦</span> Stock Export Requests</h3>
+                            <button class="btn-primary-gold" style="font-size:0.82rem;padding:8px 16px;"
+                                onclick="openModal('exportModal')">+ New Request</button>
+                        </div>
+                        <div class="dash-card-body" style="padding:0;">
+                            <div style="overflow-x:auto;">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Request ID</th>
+                                            <th>Item</th>
+                                            <th>Qty</th>
+                                            <th>Purpose</th>
+                                            <th>Requested</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="exportsBody">
+                                        <tr>
+                                            <td colspan="6" style="text-align:center;color:#8fa8c0;padding:24px;">
+                                                Loading stock exports...</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PROFILE ── -->
+                <div class="dash-section" id="sec-profile">
+                    <div style="display:grid;grid-template-columns:1fr 2fr;gap:24px;">
+                        <div class="dash-card">
+                            <div class="dash-card-body" style="text-align:center;">
+                                <div
+                                    style="width:80px;height:80px;background:linear-gradient(135deg,#FFD700,#E6C200);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;color:#001F3F;margin:0 auto 16px;">
+                                    J</div>
+                                <h3 style="color:#fff;margin-bottom:4px;">John Doe</h3>
+                                <p style="color:#FFD700;font-size:0.85rem;">User</p>
+                                <p style="color:#8fa8c0;font-size:0.82rem;margin-top:8px;">Member since Jan 2025</p>
+                                <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;">
+                                    <div
+                                        style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.15);border-radius:8px;padding:10px;font-size:0.82rem;color:#e0e8f0;">
+                                        🚢 3 Ship Orders</div>
+                                    <div
+                                        style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.15);border-radius:8px;padding:10px;font-size:0.82rem;color:#e0e8f0;">
+                                        📑 5 Tender Applications</div>
+                                    <div
+                                        style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.15);border-radius:8px;padding:10px;font-size:0.82rem;color:#e0e8f0;">
+                                        📦 4 Stock Exports</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h3><span class="card-icon">👤</span> Edit Profile</h3>
+                            </div>
+                            <div class="dash-card-body">
+                                <form onsubmit="saveProfile(event)">
+                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                                        <div class="form-group"><label class="form-label">First Name</label><input
+                                                type="text" class="form-control" value="John"></div>
+                                        <div class="form-group"><label class="form-label">Last Name</label><input
+                                                type="text" class="form-control" value="Doe"></div>
+                                    </div>
+                                    <div class="form-group"><label class="form-label">Email</label><input type="email"
+                                            class="form-control" value="john.doe@example.com"></div>
+                                    <div class="form-group"><label class="form-label">Phone</label><input type="tel"
+                                            class="form-control" value="+91 98765 43210"></div>
+                                    <div class="form-group"><label class="form-label">Department</label><select
+                                            class="form-control">
+                                            <option selected>Engineering</option>
+                                            <option>Operations</option>
+                                            <option>Procurement</option>
+                                            <option>Finance</option>
+                                        </select></div>
+                                    <div class="form-group"><label class="form-label">New Password (leave blank to keep
+                                            current)</label><input type="password" class="form-control"
+                                            placeholder="••••••••"></div>
+                                    <button type="submit" class="btn-primary-gold">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── NOTIFICATIONS ── -->
+                <div class="dash-section" id="sec-notifications">
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h3><span class="card-icon">🔔</span> All Notifications</h3><button class="btn-glass"
+                                style="font-size:0.8rem;padding:6px 14px;" onclick="markAllNotificationsRead()">Mark All
+                                Read</button>
+                        </div>
+                        <div class="dash-card-body">
+                            <div class="notif-list" id="allNotifications">
+                                <div class="notif-item">
+                                    <div class="notif-dot-icon blue"></div>
+                                    <div>
+                                        <div class="notif-text">Loading notifications...</div>
+                                        <div class="notif-time">Just now</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!-- /dash-content -->
+        </div><!-- /dash-main -->
+    </div><!-- /dash-layout -->
+
+    <!-- ── MODALS ── -->
+    <!-- Ship Order Modal -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>🚢 New Ship Order</h3><button class="modal-close" onclick="closeModal('orderModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="submitOrder(event)">
+                    <div class="form-group"><label class="form-label">Ship Type *</label><select class="form-control"
+                            required>
+                            <option value="">Select Type</option>
+                            <option>Cargo Vessel</option>
+                            <option>Patrol Boat</option>
+                            <option>Tanker</option>
+                            <option>Luxury Yacht</option>
+                            <option>Naval Vessel</option>
+                            <option>Fishing Vessel</option>
+                            <option>Other</option>
+                        </select></div>
+                    <div class="form-group"><label class="form-label">Tonnage (DWT) *</label><input type="number"
+                            class="form-control" placeholder="e.g. 5000" required></div>
+                    <div class="form-group"><label class="form-label">Material</label><select class="form-control">
+                            <option>Steel</option>
+                            <option>Aluminum</option>
+                            <option>Fiberglass</option>
+                            <option>Custom</option>
+                        </select></div>
+                    <div class="form-group"><label class="form-label">Specifications / Requirements</label><textarea
+                            class="form-control" rows="3" placeholder="Describe your requirements..."></textarea></div>
+                    <div class="form-group"><label class="form-label">Expected Delivery Date</label><input type="date"
+                            class="form-control"></div>
+                    <div class="modal-footer"><button type="button" class="btn-glass"
+                            onclick="closeModal('orderModal')">Cancel</button><button type="submit"
+                            class="btn-primary-gold">Submit Order</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Repair Modal -->
+    <div class="modal-overlay" id="repairModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>🔧 Request Ship Repair</h3><button class="modal-close"
+                    onclick="closeModal('repairModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="submitRepair(event)">
+                    <div class="form-group"><label class="form-label">Vessel Name *</label><input type="text"
+                            class="form-control" placeholder="e.g. MV Ocean Star" required></div>
+                    <div class="form-group"><label class="form-label">Issue Type *</label><select class="form-control"
+                            required>
+                            <option value="">Select Issue</option>
+                            <option>Engine Overhaul</option>
+                            <option>Hull Repair</option>
+                            <option>Electrical Systems</option>
+                            <option>Propeller Repair</option>
+                            <option>Paint & Coating</option>
+                            <option>Navigation Systems</option>
+                            <option>Structural Damage</option>
+                            <option>Other</option>
+                        </select></div>
+                    <div class="form-group"><label class="form-label">Priority</label><select class="form-control">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option selected>High</option>
+                            <option>Emergency</option>
+                        </select></div>
+                    <div class="form-group"><label class="form-label">Description *</label><textarea
+                            class="form-control" rows="3" placeholder="Describe the issue in detail..."
+                            required></textarea></div>
+                    <div class="modal-footer"><button type="button" class="btn-glass"
+                            onclick="closeModal('repairModal')">Cancel</button><button type="submit"
+                            class="btn-primary-gold">Submit Request</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>📦 Stock Export Request</h3><button class="modal-close"
+                    onclick="closeModal('exportModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="submitExport(event)">
+                    <div class="form-group"><label class="form-label">Item Name / Part Number *</label><input
+                            type="text" class="form-control" placeholder="e.g. Marine Engine MAN B&W 6S50ME" required>
+                    </div>
+                    <div class="form-group"><label class="form-label">Quantity *</label><input type="number"
+                            class="form-control" placeholder="Enter quantity" min="1" required></div>
+                    <div class="form-group"><label class="form-label">Purpose</label><select class="form-control">
+                            <option>Ship Repair</option>
+                            <option>New Construction</option>
+                            <option>Maintenance</option>
+                            <option>Resale</option>
+                            <option>Other</option>
+                        </select></div>
+                    <div class="form-group"><label class="form-label">Delivery Address</label><textarea
+                            class="form-control" rows="2" placeholder="Full delivery address..."></textarea></div>
+                    <div class="modal-footer"><button type="button" class="btn-glass"
+                            onclick="closeModal('exportModal')">Cancel</button><button type="submit"
+                            class="btn-primary-gold">Submit Request</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/user.js"></script>
+    <script>
+        // Route Guard
+        Auth.requireAuth(false);
+
+        // Section navigation
+        function showSection(id) {
+            document.querySelectorAll('.dash-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('sec-' + id).classList.add('active');
+            const titles = { dashboard: 'Dashboard', 'ship-orders': 'Ship Orders', repairs: 'Repair Requests', tenders: 'My Tenders', 'stock-exports': 'Stock Exports', profile: 'My Profile', notifications: 'Notifications' };
+            document.getElementById('pageTitle').textContent = titles[id] || id;
+            event && event.currentTarget && event.currentTarget.classList.add('active');
+        }
+
+        // Modal
+        function openModal(id) { document.getElementById(id).classList.add('open'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+        document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }));
+
+        // Form submissions
+        function submitOrder(e) { e.preventDefault(); closeModal('orderModal'); showToast('Ship order submitted successfully!', 'success'); e.target.reset(); }
+        function submitRepair(e) { e.preventDefault(); closeModal('repairModal'); showToast('Repair request submitted!', 'success'); e.target.reset(); }
+        function submitExport(e) { e.preventDefault(); closeModal('exportModal'); showToast('Export request submitted!', 'success'); e.target.reset(); }
+        function saveProfile(e) { e.preventDefault(); showToast('Profile updated successfully!', 'success'); }
+        function logout() { Auth.logout(); }
+
+        // User info from storage
+        const user = Auth.getUser() || { email: 'user@blackpearl.com', department: 'USER' };
+        const name = user.email ? user.email.split('@')[0] : 'User';
+        const initial = name.charAt(0).toUpperCase();
+        document.getElementById('sidebarUserName').textContent = name;
+        document.getElementById('topbarName').textContent = name;
+        document.getElementById('sidebarUserDept').textContent = user.department || 'User';
+        document.getElementById('userInitial').textContent = initial;
+        document.getElementById('topbarInitial').textContent = initial;
+
+        // Apply department filtering
+        if (typeof Auth !== 'undefined') Auth.applyDeptNavFilter();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigilance – Black Pearl Shipyard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="site-header" id="siteHeader">
+        <a href="index.html" class="logo-wrap"><img src="../asset/logo.jpg" alt="Logo">
+            <div><span class="brand-name">Black Pearl</span><span class="brand-sub">Shipyard Management</span></div>
+        </a>
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html">🏠 Home</a><a href="about.html">ℹ️ About</a><a href="teams.html">👥 Teams</a><a
+                href="services.html">⚙️ Services</a><a href="tender.html">📑 Tender</a><a href="stock-export.html">📦
+                Stock Export</a><a href="inventory.html">📊 Inventory</a><a href="vigilance.html" class="active">🛡️
+                Vigilance</a><a href="contact.html">📞
+                Contact</a>
+            <div class="nav-auth"><a href="login.html" class="btn-login">Login</a><a href="register.html"
+                    class="btn-register">Register</a></div>
+        </nav>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Vigilance</span></div>
+            <h1>Vigilance & <span>Grievance</span></h1>
+            <p>Report corruption, misconduct, or grievances confidentially. We are committed to transparency and
+                integrity.</p>
+        </div>
+    </section>
+
+    <!-- Vigilance Info -->
+    <section class="section">
+        <div class="container">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:60px;" class="reveal">
+                <div class="form-card" style="text-align:center;">
+                    <div style="font-size:2.5rem;margin-bottom:16px;">🛡️</div>
+                    <h3 style="color:#FFD700;font-family:'Cinzel',serif;margin-bottom:12px;">Vigilance Cell</h3>
+                    <p style="color:var(--text-muted);font-size:0.88rem;">Dedicated vigilance team to investigate
+                        complaints and ensure ethical practices across all operations.</p>
+                </div>
+                <div class="form-card" style="text-align:center;">
+                    <div style="font-size:2.5rem;margin-bottom:16px;">🔒</div>
+                    <h3 style="color:#FFD700;font-family:'Cinzel',serif;margin-bottom:12px;">Confidential</h3>
+                    <p style="color:var(--text-muted);font-size:0.88rem;">All complaints are handled with strict
+                        confidentiality. Whistleblower identity is protected at all times.</p>
+                </div>
+                <div class="form-card" style="text-align:center;">
+                    <div style="font-size:2.5rem;margin-bottom:16px;">⚡</div>
+                    <h3 style="color:#FFD700;font-family:'Cinzel',serif;margin-bottom:12px;">Swift Action</h3>
+                    <p style="color:var(--text-muted);font-size:0.88rem;">Complaints are acknowledged within 24 hours
+                        and investigated within 30 working days.</p>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
+                <!-- Complaint Form -->
+                <div class="form-card reveal">
+                    <h3 style="font-family:'Cinzel',serif;color:#FFD700;margin-bottom:20px;">🛡️ Submit Complaint /
+                        Grievance</h3>
+                    <form onsubmit="submitComplaint(event)" id="complaintForm">
+                        <div class="form-group">
+                            <label class="form-label">Complaint Type *</label>
+                            <select class="form-control" id="complaintType" required>
+                                <option value="">Select Type</option>
+                                <option>Corruption / Bribery</option>
+                                <option>Misconduct</option>
+                                <option>Safety Violation</option>
+                                <option>Workplace Harassment</option>
+                                <option>Financial Irregularity</option>
+                                <option>Quality Compromise</option>
+                                <option>Environmental Violation</option>
+                                <option>General Grievance</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Department Concerned *</label>
+                            <select class="form-control" required>
+                                <option value="">Select Department</option>
+                                <option>Engineering</option>
+                                <option>Operations</option>
+                                <option>Procurement</option>
+                                <option>Finance</option>
+                                <option>Administration</option>
+                                <option>Quality Control</option>
+                                <option>Safety</option>
+                                <option>Human Resources</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date of Incident *</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Complaint Details *</label>
+                            <textarea class="form-control" rows="5"
+                                placeholder="Describe the incident in detail. Include names, dates, locations, and any evidence..."
+                                required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Your Name (Optional)</label>
+                            <input type="text" class="form-control" placeholder="Leave blank for anonymous complaint">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contact Email (Optional)</label>
+                            <input type="email" class="form-control" placeholder="For follow-up communication">
+                        </div>
+                        <div class="form-group" style="display:flex;align-items:flex-start;gap:10px;">
+                            <input type="checkbox" id="anonymous" style="margin-top:3px;accent-color:#FFD700;">
+                            <label for="anonymous" style="font-size:0.85rem;color:#8fa8c0;cursor:pointer;">Submit as
+                                anonymous complaint (your identity will not be recorded)</label>
+                        </div>
+                        <button type="submit" class="btn-primary-gold w-100" style="justify-content:center;">Submit
+                            Complaint</button>
+                    </form>
+                </div>
+
+                <!-- Info Panel -->
+                <div class="reveal">
+                    <span class="section-tag">Important Information</span>
+                    <h2 class="section-title" style="text-align:left;">Vigilance <span>Guidelines</span></h2>
+
+                    <div style="display:flex;flex-direction:column;gap:16px;margin-top:24px;">
+                        <div class="form-card" style="padding:20px;">
+                            <h4 style="color:#FFD700;margin-bottom:8px;">📞 Vigilance Hotline</h4>
+                            <p style="color:var(--text-muted);font-size:0.88rem;">24/7 Hotline: <strong
+                                    style="color:#fff;">1800-XXX-XXXX</strong> (Toll Free)</p>
+                            <p style="color:var(--text-muted);font-size:0.88rem;">Email: <strong
+                                    style="color:#fff;">vigilance@blackpearlshipyard.com</strong></p>
+                        </div>
+                        <div class="form-card" style="padding:20px;">
+                            <h4 style="color:#FFD700;margin-bottom:8px;">🏛️ Vigilance Officer</h4>
+                            <p style="color:var(--text-muted);font-size:0.88rem;">Chief Vigilance Officer: <strong
+                                    style="color:#fff;">Shri. R. Krishnaswamy, IAS</strong></p>
+                            <p style="color:var(--text-muted);font-size:0.88rem;">Room 201, Administrative Block, Black
+                                Pearl Shipyard</p>
+                        </div>
+                        <div class="form-card" style="padding:20px;">
+                            <h4 style="color:#FFD700;margin-bottom:8px;">⚖️ Legal Protection</h4>
+                            <p style="color:var(--text-muted);font-size:0.88rem;">Whistleblowers are protected under the
+                                Whistle Blowers Protection Act, 2014. No retaliation will be tolerated.</p>
+                        </div>
+                        <div class="form-card" style="padding:20px;">
+                            <h4 style="color:#FFD700;margin-bottom:8px;">📊 Resolution Timeline</h4>
+                            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+                                <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span
+                                        style="color:var(--text-muted);">Acknowledgement</span><span
+                                        style="color:#00c896;">24 Hours</span></div>
+                                <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span
+                                        style="color:var(--text-muted);">Initial Investigation</span><span
+                                        style="color:#FFD700;">7 Days</span></div>
+                                <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span
+                                        style="color:var(--text-muted);">Full Resolution</span><span
+                                        style="color:#ffa500;">30 Days</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Help &amp; Info</span>
+                <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+                <div class="section-line"></div>
+                <p class="section-desc">Common questions about the vigilance process, complaint handling, and your
+                    rights.</p>
+            </div>
+            <div style="max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px;" class="reveal"
+                id="faqList">
+                <!-- FAQs rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand"><a href="index.html" class="logo-wrap"><img src="../asset/logo.jpg"
+                            alt="Logo">
+                        <div><span class="brand-name">Black Pearl</span><span class="brand-sub">Shipyard
+                                Management</span></div>
+                    </a>
+                    <p>World-class shipbuilding and marine engineering solutions since 1920.</p>
+                    <div class="social-links"><a href="#"><img src="../asset/facebook.jpg" alt="Facebook"></a><a
+                            href="#"><img src="../asset/twitter.jpg" alt="Twitter"></a><a href="#"><img
+                                src="../asset/linkedin.jpg" alt="LinkedIn"></a></div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Ship Building</a></li>
+                        <li><a href="services.html">Ship Repair</a></li>
+                        <li><a href="tender.html">Tenders</a></li>
+                        <li><a href="stock-export.html">Stock Export</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Vigilance</h4>
+                    <p>📞 1800-XXX-XXXX (Toll Free)</p>
+                    <p style="margin-top:8px;">✉️ vigilance@blackpearlshipyard.com</p>
+                    <p style="margin-top:6px;">🕐 24/7 Available</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Black Pearl Shipyard. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+        window.addEventListener('scroll', () => document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 50));
+        const obs = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('visible')), { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        function submitComplaint(e) {
+            e.preventDefault();
+            const refNo = 'VIG-' + Date.now().toString().slice(-6);
+            showToast(`Complaint submitted! Reference: ${refNo}`, 'success');
+            document.getElementById('complaintForm').reset();
+        }
+
+        // FAQ Accordion
+        const faqs = [
+            { q: 'How do I report a complaint?', a: 'You can submit a complaint using the grievance form on this page. Fill in the complaint type, department, date of incident, and a detailed description. You may choose to remain anonymous.' },
+            { q: 'Will my identity be kept confidential?', a: 'Yes. All complaints are handled with strict confidentiality. If you choose to submit anonymously, your identity will not be recorded or disclosed at any stage of the investigation.' },
+            { q: 'How long does it take to resolve a complaint?', a: 'Complaints are acknowledged within 24 hours. An initial investigation begins within 7 working days, and full resolution is targeted within 30 working days depending on complexity.' },
+            { q: 'Can I submit evidence along with my complaint?', a: 'Yes. You can attach supporting documents, images, or files using the evidence upload field in the grievance form. Accepted formats include PDF, DOC, JPG, and PNG (max 10MB).' },
+            { q: 'What legal protection do I have as a whistleblower?', a: 'Whistleblowers are fully protected under the Whistle Blowers Protection Act, 2014. No retaliation, harassment, or adverse action will be tolerated against any complainant.' },
+            { q: 'Can I track the status of my complaint?', a: 'Yes. After submission, you will receive a unique reference number (e.g., VIG-XXXXXX). You can use this reference to follow up with the Vigilance Officer via email or phone.' },
+            { q: 'What types of complaints can I report?', a: 'You can report corruption, bribery, misconduct, safety violations, workplace harassment, financial irregularities, quality compromises, environmental violations, and general grievances.' },
+            { q: 'Who handles the complaints?', a: 'All complaints are reviewed by the Chief Vigilance Officer (CVO) and the dedicated Vigilance Cell. Serious matters may be escalated to the Board or external authorities as required.' },
+        ];
+
+        document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,215,0,0.1);border-radius:12px;overflow:hidden;transition:border-color 0.3s;" id="faq-${i}">
+                <button onclick="toggleFaq(${i})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 20px;background:none;border:none;cursor:pointer;text-align:left;">
+                    <span style="color:#e0e8f0;font-weight:600;font-size:0.95rem;">${f.q}</span>
+                    <span id="faq-icon-${i}" style="color:#FFD700;font-size:1.2rem;transition:transform 0.3s;flex-shrink:0;margin-left:12px;">+</span>
+                </button>
+                <div id="faq-body-${i}" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease;">
+                    <div style="padding:0 20px 18px;color:#8fa8c0;font-size:0.88rem;line-height:1.7;border-top:1px solid rgba(255,215,0,0.08);padding-top:14px;">${f.a}</div>
+                </div>
+            </div>`).join('');
+
+        function toggleFaq(i) {
+            const body = document.getElementById(`faq-body-${i}`);
+            const icon = document.getElementById(`faq-icon-${i}`);
+            const isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
+            // Close all
+            faqs.forEach((_, j) => {
+                document.getElementById(`faq-body-${j}`).style.maxHeight = '0px';
+                document.getElementById(`faq-icon-${j}`).textContent = '+';
+                document.getElementById(`faq-icon-${j}`).style.transform = 'rotate(0deg)';
+            });
+            if (!isOpen) {
+                body.style.maxHeight = body.scrollHeight + 200 + 'px';
+                icon.textContent = '−';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function showToast(msg, type = 'info') {
+            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerHTML = `<span class="toast-icon">${icons[type]}</span><span class="toast-msg">${msg}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 6000);
+        }
+    </script>
+</body>
+
+</html>

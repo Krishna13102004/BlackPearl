@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – Black Pearl Shipyard</title>
+  <meta name="description" content="Login to Black Pearl Shipyard Management System">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Login Page Specific Styles */
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 24px 60px;
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 50%, var(--navy) 100%);
+      position: relative;
+    }
+
+    .login-main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .login-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-header .logo-wrap {
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .login-header .logo-wrap img {
+      height: 56px;
+      width: 56px;
+    }
+
+    .login-header .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+    }
+
+    .login-header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .login-header h1 span {
+      color: var(--gold);
+    }
+
+    .login-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Login Tabs */
+    .login-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 28px;
+      border-bottom: 2px solid var(--glass-border);
+    }
+
+    .login-tab {
+      flex: 1;
+      padding: 12px 16px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      font-size: 0.85rem;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .login-tab:hover {
+      color: var(--gold);
+    }
+
+    .login-tab.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      outline: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .form-control:focus {
+      border-color: var(--gold);
+      background: rgba(255, 215, 0, 0.05);
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    }
+
+    .form-control::placeholder {
+      color: var(--text-muted);
+    }
+
+    select.form-control {
+      color: var(--text-muted);
+    }
+
+    select.form-control option {
+      background: var(--navy-dark);
+      color: #fff;
+    }
+
+    .password-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-input-wrapper .form-control {
+      padding-right: 45px;
+    }
+
+    .toggle-password-btn {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      transition: color 0.2s;
+    }
+
+    .toggle-password-btn:hover {
+      color: var(--gold);
+    }
+
+    /* Login Button */
+    .btn-login-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--navy);
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+    }
+
+    .btn-login-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    }
+
+    .btn-login-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Links */
+    .login-links {
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .login-links a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .login-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Demo Info */
+    .demo-info {
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-left: 3px solid var(--gold);
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .demo-info strong {
+      color: var(--gold);
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+      .login-card {
+        padding: 28px 20px;
+      }
+
+      .login-header h1 {
+        font-size: 1.3rem;
+      }
+
+      .login-tabs {
+        margin-bottom: 20px;
+      }
+
+      .login-tab {
+        font-size: 0.8rem;
+        padding: 10px 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="siteHeader">
+    <a href="index.html" class="logo-wrap">
+      <img src="../asset/logo.jpg" alt="Black Pearl Logo">
+      <div>
+        <span class="brand-name">Black Pearl</span>
+        <span class="brand-sub">Shipyard Management</span>
+      </div>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">🏠 Home</a>
+      <a href="about.html">ℹ️ About</a>
+      <a href="teams.html">👥 Teams</a>
+      <a href="services.html">⚙️ Services</a>
+      <a href="tender.html">📑 Tender</a>
+      <a href="stock-export.html">📦 Stock Export</a>
+      <a href="vigilance.html">🛡️ Vigilance</a>
+      <a href="contact.html">📞 Contact</a>
+      <div class="nav-auth">
+        <a href="login.html" class="btn-login active">Login</a>
+        <a href="register.html" class="btn-register">Register</a>
+      </div>
+    </nav>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ══ LOGIN MAIN ══ -->
+  <main class="login-page">
+    <div class="login-main">
+      <div class="login-container">
+        <div class="login-card">
+          <!-- Login Header -->
+          <div class="login-header">
+            <a href="index.html" class="logo-wrap">
+              <img src="../asset/logo.jpg" alt="Black Pearl Logo">
+              <div>
+                <span class="brand-name">Black Pearl</span>
+                <span class="brand-sub">Shipyard Management</span>
+              </div>
+            </a>
+            <h1>Welcome <span>Back</span></h1>
+            <p>Sign in to access your dashboard</p>
+          </div>
+
+          <!-- Login Type Tabs -->
+          <div class="login-tabs">
+            <button type="button" class="login-tab active" id="tabUser" data-role="USER">
+              👤 Staff Login
+            </button>
+            <button type="button" class="login-tab" id="tabAdmin" data-role="ADMIN">
+              🛡️ Admin Login
+            </button>
+          </div>
+
+          <!-- Login Form -->
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <!-- Department Dropdown (for USER role) -->
+            <div class="form-group" id="departmentGroup">
+              <label class="form-label">Department</label>
+              <select id="loginDepartment" class="form-control">
+                <option value="">Select your department</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Operations">Operations</option>
+                <option value="Finance">Finance</option>
+                <option value="Procurement">Procurement</option>
+                <option value="Administration">Administration</option>
+                <option value="Quality Control">Quality Control</option>
+                <option value="Safety">Safety</option>
+              </select>
+            </div>
+
+            <!-- Email Input -->
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input 
+                type="email" 
+                id="loginEmail" 
+                class="form-control" 
+                placeholder="you@blackpearl.com" 
+                required
+                autocomplete="email"
+              >
+            </div>
+
+            <!-- Password Input with Toggle -->
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <div class="password-input-wrapper">
+                <input 
+                  type="password" 
+                  id="loginPassword" 
+                  class="form-control" 
+                  placeholder="••••••••" 
+                  required
+                  autocomplete="current-password"
+                >
+                <button 
+                  type="button" 
+                  class="toggle-password-btn" 
+                  id="togglePassword"
+                  title="Toggle password visibility"
+                >
+                  👁️
+                </button>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-login-submit" id="loginBtn">
+              Sign In
+            </button>
+
+            <!-- Register Link -->
+            <div class="login-links">
+              Don't have an account? <a href="register.html">Create one here</a>
+            </div>
+
+            <!-- Demo Info -->
+            <div class="demo-info">
+              <strong>Demo:</strong> Use <strong>admin@blackpearl.com</strong> / <strong>admin123</strong> or <strong>eng@blackpearl.com</strong> / <strong>user123</strong>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo-wrap">
+            <img src="../asset/logo.jpg" alt="Logo">
+            <div>
+              <span class="brand-name">Black Pearl</span>
+              <span class="brand-sub">Shipyard Management</span>
+            </div>
+          </a>
+          <p>World-class shipbuilding and marine engineering solutions. Precision crafted, globally trusted since 1920.
+          </p>
+          <div class="social-links">
+            <a href="#" title="Facebook"><img src="../asset/facebook.jpg" alt="Facebook"></a>
+            <a href="#" title="Twitter"><img src="../asset/twitter.jpg" alt="Twitter"></a>
+            <a href="#" title="LinkedIn"><img src="../asset/linkedin.jpg" alt="LinkedIn"></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="about.html">ℹ️ About Us</a></li>
+            <li><a href="teams.html">👥 Our Teams</a></li>
+            <li><a href="services.html">⚙️ Services</a></li>
+            <li><a href="contact.html">📞 Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">🚢 Ship Building</a></li>
+            <li><a href="services.html">🔧 Ship Repair</a></li>
+            <li><a href="tender.html">📑 Tenders</a></li>
+            <li><a href="stock-export.html">📦 Stock Export</a></li>
+            <li><a href="vigilance.html">🛡️ Vigilance</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <p>📍 Coastal Industrial Zone,<br>Thoothukudi, Tamil Nadu 628 001</p>
+          <p style="margin-top:10px;">📞 +91 461 234 5678</p>
+          <p style="margin-top:6px;">✉️ info@blackpearlshipyard.com</p>
+          <p style="margin-top:6px;">🕐 Mon–Sat: 8:00 AM – 6:00 PM</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Black Pearl Shipyard Management System. All Rights Reserved.</p>
+        <p>Designed with ⚓ for Maritime Excellence</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+    hamburger.addEventListener('click', () => mainNav.classList.toggle('open'));
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Login functionality
+    let selectedRole = 'USER';
+
+    // Tab switching
+    document.getElementById('tabUser').addEventListener('click', () => switchRole('USER'));
+    document.getElementById('tabAdmin').addEventListener('click', () => switchRole('ADMIN'));
+
+    function switchRole(role) {
+      selectedRole = role;
+      const userTab = document.getElementById('tabUser');
+      const adminTab = document.getElementById('tabAdmin');
+      const deptGroup = document.getElementById('departmentGroup');
+
+      if (role === 'USER') {
+        userTab.classList.add('active');
+        adminTab.classList.remove('active');
+        deptGroup.style.display = 'block';
+      } else {
+        adminTab.classList.add('active');
+        userTab.classList.remove('active');
+        deptGroup.style.display = 'none';
+      }
+    }
+
+    // Password toggle
+    document.getElementById('togglePassword').addEventListener('click', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('loginPassword');
+      const btn = document.getElementById('togglePassword');
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+        btn.title = 'Hide password';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+        btn.title = 'Show password';
+      }
+    });
+
+    // Login handler
+    async function handleLogin(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const dept = document.getElementById('loginDepartment').value;
+      const btn = document.getElementById('loginBtn');
+
+      if (selectedRole === 'USER' && !dept) {
+        showToast('Please select your department', 'error');
+        return;
+      }
+
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span class="spinner"></span> Signing in...';
+      btn.disabled = true;
+
+      try {
+        let result;
+        try {
+          result = await Auth.login(email, password, selectedRole);
+        } catch (err) {
+          console.warn('Backend login failed, using demo:', err.message);
+          result = Auth.demoLogin(email, password, selectedRole);
+        }
+
+        if (result.success) {
+          showToast('✓ Login successful!', 'success');
+          setTimeout(() => {
+            const role = Auth.getRole();
+            window.location.href = role === 'ADMIN' ? 'admin-dashboard.html' : 'user-dashboard.html';
+          }, 800);
+        } else {
+          showToast(result.message || 'Invalid credentials', 'error');
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showToast('An error occurred. Please try again.', 'error');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    // Toast notifications
+    function showToast(msg, type = 'info') {
+      const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <span class="toast-icon">${icons[type]}</span>
+        <span class="toast-msg">${msg}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+      `;
+      document.getElementById('toastContainer').appendChild(toast);
+      
+      setTimeout(() => {
+        if (toast.parentElement) toast.remove();
+      }, 4000);
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      switchRole('USER');
+    });
+  </script>
+</body>
+
+</html>

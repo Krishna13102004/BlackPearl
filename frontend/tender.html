@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenders – Black Pearl Shipyard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="site-header" id="siteHeader">
+        <a href="index.html" class="logo-wrap"><img src="../asset/logo.jpg" alt="Logo">
+            <div><span class="brand-name">Black Pearl</span><span class="brand-sub">Shipyard Management</span></div>
+        </a>
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html">🏠 Home</a><a href="about.html">ℹ️ About</a><a href="teams.html">👥 Teams</a><a
+                href="services.html">⚙️ Services</a><a href="tender.html" class="active">📑 Tender</a><a
+                href="stock-export.html">📦 Stock Export</a><a href="inventory.html">📊 Inventory</a><a
+                href="vigilance.html">🛡️ Vigilance</a><a href="contact.html">📞 Contact</a>
+            <div class="nav-auth"><a href="login.html" class="btn-login">Login</a><a href="register.html"
+                    class="btn-register">Register</a></div>
+        </nav>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Tenders</span></div>
+            <h1>Tender <span>Portal</span></h1>
+            <p>View open tenders and submit your applications for shipyard contracts and procurement.</p>
+        </div>
+    </section>
+
+    <!-- Tender Stats -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Open Tenders</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">₹850Cr</div>
+                    <div class="stat-label">Total Value</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Applications</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Closing Soon</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Tenders -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Current Listings</span>
+                <h2 class="section-title">Active <span>Tenders</span></h2>
+                <div class="section-line"></div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;" class="reveal">
+                <select class="form-control" style="width:auto;" id="filterCategory" onchange="filterTenders()">
+                    <option value="">All Categories</option>
+                    <option>Ship Building</option>
+                    <option>Ship Repair</option>
+                    <option>Supply</option>
+                    <option>Civil Works</option>
+                    <option>IT Services</option>
+                </select>
+                <select class="form-control" style="width:auto;" id="filterStatus" onchange="filterTenders()">
+                    <option value="">All Status</option>
+                    <option>Open</option>
+                    <option>Closing Soon</option>
+                </select>
+                <input type="text" class="form-control" style="width:auto;flex:1;" placeholder="🔍 Search tenders..."
+                    id="searchTender" oninput="filterTenders()">
+            </div>
+
+            <div class="tender-table-wrap reveal">
+                <table class="data-table" id="tenderTable">
+                    <thead>
+                        <tr>
+                            <th>Tender No.</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Value (₹ Cr)</th>
+                            <th>Published</th>
+                            <th>Closing Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tenderBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apply Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
+                <div class="reveal">
+                    <span class="section-tag">Apply Now</span>
+                    <h2 class="section-title" style="text-align:left;">Submit Your <span>Application</span></h2>
+                    <p style="color:var(--text-muted);margin-bottom:24px;">Registered vendors can apply for open
+                        tenders. Login required to submit applications.</p>
+                    <div style="display:flex;flex-direction:column;gap:12px;">
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <div
+                                style="width:36px;height:36px;background:rgba(255,215,0,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                                📋</div><span style="color:var(--text-muted);font-size:0.9rem;">Download tender
+                                documents</span>
+                        </div>
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <div
+                                style="width:36px;height:36px;background:rgba(255,215,0,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                                📝</div><span style="color:var(--text-muted);font-size:0.9rem;">Fill application
+                                online</span>
+                        </div>
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <div
+                                style="width:36px;height:36px;background:rgba(255,215,0,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                                📤</div><span style="color:var(--text-muted);font-size:0.9rem;">Upload required
+                                documents</span>
+                        </div>
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <div
+                                style="width:36px;height:36px;background:rgba(255,215,0,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                                🔔</div><span style="color:var(--text-muted);font-size:0.9rem;">Track application
+                                status</span>
+                        </div>
+                    </div>
+                    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;">
+                        <a href="login.html" class="btn-primary-gold">Apply Now →</a>
+                        <a href="register.html" class="btn-outline-gold">Register as Vendor</a>
+                    </div>
+                </div>
+                <div class="form-card reveal">
+                    <h3 style="font-family:'Cinzel',serif;color:#FFD700;margin-bottom:20px;">Quick Enquiry</h3>
+                    <form onsubmit="submitEnquiry(event)">
+                        <div class="form-group"><label class="form-label">Company Name</label><input type="text"
+                                class="form-control" placeholder="Your company name" required></div>
+                        <div class="form-group"><label class="form-label">Email</label><input type="email"
+                                class="form-control" placeholder="contact@company.com" required></div>
+                        <div class="form-group"><label class="form-label">Tender Reference</label><input type="text"
+                                class="form-control" placeholder="e.g. BPS-2025-001"></div>
+                        <div class="form-group"><label class="form-label">Message</label><textarea class="form-control"
+                                rows="3" placeholder="Your enquiry..."></textarea></div>
+                        <button type="submit" class="btn-primary-gold w-100" style="justify-content:center;">Send
+                            Enquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tender Notification Subscription -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Stay Updated</span>
+                <h2 class="section-title">Subscribe to <span>Tender Updates</span></h2>
+                <div class="section-line"></div>
+                <p class="section-desc">Get real-time notifications when new tenders are published or statuses change.
+                </p>
+            </div>
+            <div style="max-width:680px;margin:0 auto;" class="reveal">
+                <div class="form-card">
+                    <h3 style="font-family:'Cinzel',serif;color:#FFD700;margin-bottom:20px;">🔔 Tender Notification
+                        Preferences</h3>
+                    <form onsubmit="subscribeTender(event)">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                            <div class="form-group"><label class="form-label">Email Address *</label><input type="email"
+                                    class="form-control" placeholder="your@email.com" required id="subEmail"></div>
+                            <div class="form-group"><label class="form-label">Phone (for SMS)</label><input type="tel"
+                                    class="form-control" placeholder="+91 XXXXX XXXXX" id="subPhone"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Notification Preference *</label>
+                            <div style="display:flex;gap:20px;margin-top:8px;flex-wrap:wrap;">
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;color:#8fa8c0;cursor:pointer;"><input
+                                        type="radio" name="notifPref" value="Email" checked
+                                        style="accent-color:#FFD700;"> Email Only</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;color:#8fa8c0;cursor:pointer;"><input
+                                        type="radio" name="notifPref" value="SMS" style="accent-color:#FFD700;"> SMS
+                                    Only</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;color:#8fa8c0;cursor:pointer;"><input
+                                        type="radio" name="notifPref" value="Both" style="accent-color:#FFD700;">
+                                    Both</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tender Categories (optional)</label>
+                            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+                                <label
+                                    style="display:flex;align-items:center;gap:6px;color:#8fa8c0;font-size:0.88rem;cursor:pointer;"><input
+                                        type="checkbox" style="accent-color:#FFD700;"> Ship Building</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:6px;color:#8fa8c0;font-size:0.88rem;cursor:pointer;"><input
+                                        type="checkbox" style="accent-color:#FFD700;"> Ship Repair</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:6px;color:#8fa8c0;font-size:0.88rem;cursor:pointer;"><input
+                                        type="checkbox" style="accent-color:#FFD700;"> Supply</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:6px;color:#8fa8c0;font-size:0.88rem;cursor:pointer;"><input
+                                        type="checkbox" style="accent-color:#FFD700;"> Civil Works</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:6px;color:#8fa8c0;font-size:0.88rem;cursor:pointer;"><input
+                                        type="checkbox" style="accent-color:#FFD700;"> IT Services</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary-gold w-100" style="justify-content:center;">🔔
+                            Subscribe to Updates</button>
+                    </form>
+                    <div
+                        style="margin-top:20px;padding:16px;background:rgba(255,215,0,0.05);border-radius:10px;border:1px solid rgba(255,215,0,0.1);">
+                        <p style="color:#8fa8c0;font-size:0.82rem;text-align:center;">📧 You will receive updates for:
+                            <strong style="color:#FFD700;">New Tenders · Status Changes · Deadline Reminders · Award
+                                Announcements</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand"><a href="index.html" class="logo-wrap"><img src="../asset/logo.jpg"
+                            alt="Logo">
+                        <div><span class="brand-name">Black Pearl</span><span class="brand-sub">Shipyard
+                                Management</span></div>
+                    </a>
+                    <p>World-class shipbuilding and marine engineering solutions since 1920.</p>
+                    <div class="social-links"><a href="#"><img src="../asset/facebook.jpg" alt="Facebook"></a><a
+                            href="#"><img src="../asset/twitter.jpg" alt="Twitter"></a><a href="#"><img
+                                src="../asset/linkedin.jpg" alt="LinkedIn"></a></div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Tender Info</h4>
+                    <ul>
+                        <li><a href="#">Tender Guidelines</a></li>
+                        <li><a href="#">Vendor Registration</a></li>
+                        <li><a href="#">Bid Documents</a></li>
+                        <li><a href="#">Results</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>📍 Thoothukudi, Tamil Nadu</p>
+                    <p style="margin-top:8px;">📞 +91 461 234 5678</p>
+                    <p style="margin-top:6px;">✉️ tenders@blackpearlshipyard.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Black Pearl Shipyard. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+        window.addEventListener('scroll', () => document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 50));
+        const obs = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('visible')), { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        // Fallback tenders in case API is not available
+        const fallbackTenders = [
+            { id: 1, tenderNo: 'BPS-2025-001', title: 'Construction of 5000 DWT Cargo Vessel', category: 'Ship Building', value: '125.50', createdAt: '2025-01-10', closingDate: '2025-03-15', status: 'OPEN' },
+            { id: 2, tenderNo: 'BPS-2025-002', title: 'Dry Dock Repair – INS Defender', category: 'Ship Repair', value: '18.75', createdAt: '2025-01-15', closingDate: '2025-02-28', status: 'OPEN' },
+            { id: 3, tenderNo: 'BPS-2025-003', title: 'Supply of Marine Grade Steel Plates', category: 'Supply', value: '42.00', createdAt: '2025-01-20', closingDate: '2025-03-30', status: 'OPEN' },
+            { id: 4, tenderNo: 'BPS-2025-004', title: 'Electrical Systems Upgrade – 3 Vessels', category: 'Ship Repair', value: '28.30', createdAt: '2025-01-22', closingDate: '2025-03-10', status: 'OPEN' },
+            { id: 5, tenderNo: 'BPS-2025-005', title: 'Construction of Patrol Boat (x4)', category: 'Ship Building', value: '210.00', createdAt: '2025-01-25', closingDate: '2025-04-15', status: 'OPEN' },
+            { id: 6, tenderNo: 'BPS-2025-006', title: 'Paint & Anti-Corrosion Coating Works', category: 'Ship Repair', value: '15.20', createdAt: '2025-01-28', closingDate: '2025-02-25', status: 'OPEN' },
+            { id: 7, tenderNo: 'BPS-2025-007', title: 'IT Infrastructure Modernization', category: 'IT Services', value: '8.50', createdAt: '2025-02-01', closingDate: '2025-03-20', status: 'OPEN' },
+            { id: 8, tenderNo: 'BPS-2025-008', title: 'Fabrication of Crane Components', category: 'Supply', value: '35.80', createdAt: '2025-02-05', closingDate: '2025-03-25', status: 'OPEN' },
+            { id: 9, tenderNo: 'BPS-2025-009', title: 'Dry Dock No. 3 Civil Renovation', category: 'Civil Works', value: '55.00', createdAt: '2025-02-08', closingDate: '2025-02-27', status: 'OPEN' },
+            { id: 10, tenderNo: 'BPS-2025-010', title: 'Supply of Marine Engines (x6)', category: 'Supply', value: '180.00', createdAt: '2025-02-10', closingDate: '2025-04-30', status: 'OPEN' },
+            { id: 11, tenderNo: 'BPS-2025-011', title: 'Hull Inspection – 8 Vessels', category: 'Ship Repair', value: '12.40', createdAt: '2025-02-12', closingDate: '2025-02-26', status: 'OPEN' },
+            { id: 12, tenderNo: 'BPS-2025-012', title: 'Construction of Luxury Yacht', category: 'Ship Building', value: '95.00', createdAt: '2025-02-15', closingDate: '2025-05-01', status: 'OPEN' },
+        ];
+
+        let allTenders = [...fallbackTenders];
+        let filtered = [...allTenders];
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            return new Date(dateStr).toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        }
+
+        function getStatusDisplay(status) {
+            const now = new Date();
+            if (status === 'CLOSED') return 'Closed';
+            if (status === 'AWARDED') return 'Awarded';
+            // Check if closing date is within 7 days
+            return 'Open';
+        }
+
+        function renderTenders() {
+            const tbody = document.getElementById('tenderBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = filtered.map(t => {
+                const statusDisplay = getStatusDisplay(t.status);
+                const closingDate = new Date(t.closingDate);
+                const today = new Date();
+                const daysLeft = Math.ceil((closingDate - today) / (1000 * 60 * 60 * 24));
+                const isClosingSoon = daysLeft <= 7 && daysLeft > 0;
+                
+                return `
+                <tr>
+                    <td style="font-weight:600;color:#FFD700;">${t.tenderNo}</td>
+                    <td>${t.title}</td>
+                    <td><span style="background:rgba(0,172,237,0.1);color:#00aced;padding:3px 10px;border-radius:50px;font-size:0.75rem;">${t.category}</span></td>
+                    <td>₹${t.value} Cr</td>
+                    <td style="color:var(--text-muted);">${formatDate(t.createdAt)}</td>
+                    <td style="color:${isClosingSoon ? '#ffa500' : 'var(--text-muted)'};">${formatDate(t.closingDate)}</td>
+                    <td><span class="badge ${t.status === 'OPEN' || statusDisplay === 'Open' ? 'badge-open' : 'badge-pending'}">${statusDisplay}</span></td>
+                    <td><a href="${Auth && Auth.isLoggedIn() ? '#apply' : 'login.html'}" class="btn-glass" style="font-size:0.78rem;padding:6px 14px;">Apply</a></td>
+                </tr>`;
+            }).join('');
+        }
+
+        async function loadTendersFromAPI() {
+            try {
+                if (typeof API !== 'undefined' && API.tenders) {
+                    const tenderData = await API.tenders.getOpen();
+                    if (tenderData && tenderData.length > 0) {
+                        allTenders = tenderData;
+                        filtered = [...allTenders];
+                        renderTenders();
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not load tenders from API, using fallback:', e.message);
+            }
+            // Use fallback if API fails
+            filtered = [...allTenders];
+            renderTenders();
+        }
+
+        function filterTenders() {
+            const cat = document.getElementById('filterCategory').value;
+            const status = document.getElementById('filterStatus').value;
+            const search = document.getElementById('searchTender').value.toLowerCase();
+            
+            filtered = allTenders.filter(t => {
+                const matchCat = !cat || t.category === cat;
+                const matchStatus = !status || (status === 'Open' && t.status === 'OPEN') || (status === 'Closing Soon' && t.status === 'OPEN');
+                const matchSearch = !search || t.title.toLowerCase().includes(search) || (t.tenderNo || '').toLowerCase().includes(search);
+                return matchCat && matchStatus && matchSearch;
+            });
+            
+            renderTenders();
+        }
+
+        function submitEnquiry(e) {
+            e.preventDefault();
+            showToast('Enquiry submitted successfully!', 'success');
+            e.target.reset();
+        }
+
+        function subscribeTender(e) {
+            e.preventDefault();
+            const email = document.getElementById('subEmail').value;
+            const pref = document.querySelector('input[name="notifPref"]:checked').value;
+            showToast(`✅ Subscribed! Tender updates will be sent via ${pref} to ${email}`, 'success');
+            e.target.reset();
+        }
+
+        function showToast(msg, type = 'info') {
+            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerHTML = `<span class="toast-icon">${icons[type]}</span><span class="toast-msg">${msg}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 4000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTendersFromAPI();
+        });
+
+        // Fallback initialization
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadTendersFromAPI);
+        } else {
+            loadTendersFromAPI();
+        }
+    </script>
+</body>
+
+</html>
